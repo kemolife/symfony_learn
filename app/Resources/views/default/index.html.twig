@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {% block main %}
+        {{ parent(blogs) }}
+    {% endblock %}
+
+    {% include 'blog.html.twig' with {'blogs': blogs} %}
+
+    {% block footer %}
+        {{ parent() }}
+    {% endblock %}
+
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}

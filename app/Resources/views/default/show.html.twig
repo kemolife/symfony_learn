@@ -1,0 +1,32 @@
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {% block main %}
+        {% block title_main %}
+            {{ item.title }}
+        {% endblock %}
+        {{ parent(blogs) }}
+    {% endblock %}
+
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    {{ item.body }}
+                </div>
+            </div>
+            {% include 'comments.html.twig' %}
+        </div>
+    </article>
+
+    {% block footer %}
+        {{ parent() }}
+    {% endblock %}
+
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}

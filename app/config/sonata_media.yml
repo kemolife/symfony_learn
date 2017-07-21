@@ -1,0 +1,32 @@
+sonata_media:
+    # ...
+    db_driver: doctrine_orm
+    default_context: default
+    contexts:
+            default:  # the default context is mandatory
+                providers:
+                    - sonata.media.provider.dailymotion
+                    - sonata.media.provider.youtube
+                    - sonata.media.provider.image
+                    - sonata.media.provider.file
+    filesystem:
+            local:
+                directory:  %kernel.root_dir%/../web/uploads/media
+                create:     false
+    pixlr:
+        enabled:  true
+        secret:   theSecretHash
+        referrer: Application Name
+    providers:
+        # ...
+        image:
+            thumbnail:  sonata.media.thumbnail.liip_imagine
+        vimeo:
+            thumbnail:  sonata.media.thumbnail.liip_imagine
+        youtube:
+            thumbnail:  sonata.media.thumbnail.liip_imagine
+        dailymotion:
+            thumbnail:  sonata.media.thumbnail.liip_imagine
+    cdn:
+        server:
+            path: /uploads/media # http://media.sonata-project.org/
