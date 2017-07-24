@@ -15,6 +15,9 @@ class BlogPostsAdmin extends AbstractAdmin
         $formMapper
             ->add('title', 'text')
             ->add('body', 'textarea')
+            ->add('updated', 'hidden', [
+                'data' => new \DateTime()
+            ])
             ->add('category', 'entity', array(
                 'class' => 'AppBundle\Entity\Category',
                 'choice_label' => 'name',

@@ -30,10 +30,18 @@ class Comments
     /**
      * @var int
      *
-     * @ORM\OneToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="author", referencedColumnName="id")
      */
     private $author;
+
+    /**
+     * @var int
+     *
+     * @ORM\ManyToOne(targetEntity="BlogPost")
+     * @ORM\JoinColumn(name="blogId", referencedColumnName="id")
+     */
+    private $blogId;
 
     /**
      * @var \DateTime
@@ -125,5 +133,29 @@ class Comments
     public function getAuthor()
     {
         return $this->author;
+    }
+
+    /**
+     * Set blogId
+     *
+     * @param \AppBundle\Entity\BlogPost $blogId
+     *
+     * @return Comments
+     */
+    public function setBlogId(\AppBundle\Entity\BlogPost $blogId = null)
+    {
+        $this->blogId = $blogId;
+
+        return $this;
+    }
+
+    /**
+     * Get blogId
+     *
+     * @return \AppBundle\Entity\BlogPost
+     */
+    public function getBlogId()
+    {
+        return $this->blogId;
     }
 }

@@ -31,8 +31,15 @@ class BlogController extends Controller
 
     public function showAction($slug, Request $request)
     {
+        $item = $this->getDoctrine()
+            ->getRepository(BlogPost::class)
+            ->find($slug);
         // create a task and give it some dummy data for this example
         $comment = new Comments();
+
+        $commentItems = $this->getDoctrine()
+            ->getRepository(Comments::class)
+            ->findByBlogId($item->getId());
 
         $form = $this->createFormBuilder($comment)
             ->add('massage', TextareaType::class)
@@ -45,17 +52,16 @@ class BlogController extends Controller
             $comment = $form->getData();
             $comment->setAuthor($this->getUser());
             $comment->setCreated(new \DateTime());
-             $em = $this->getDoctrine()->getManager();
-             $em->persist($comment);
-             $em->flush();
+            $comment->setBlogId($item);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($comment);
+            $em->flush();
         }
 
-        $item = $this->getDoctrine()
-            ->getRepository(BlogPost::class)
-            ->find($slug);
         return $this->render('default/show.html.twig', [
             'form' => $form->createView(),
-            'item' => $item
+            'item' => $item,
+            'commentItems' => $commentItems
         ]);
     }
 }

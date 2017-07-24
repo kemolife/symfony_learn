@@ -1,6 +1,9 @@
+{{ dump(commentItems) }}
+{{ form_start(form) }}
 <div class="form_row">
     {{ form_label(form.massage) }}
     {{ form_errors(form.massage) }}
     {{ form_widget(form.massage, { 'attr': {'class': 'form-control', 'rows': '5', 'id': 'comment'} }) }}
     {{ form_widget(form.save, { 'attr': {'class': 'form-control'}}) }}
 </div>
+{{ form_end(form) }}
