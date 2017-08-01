@@ -4,18 +4,15 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\BlogPost;
 use AppBundle\Entity\Comments;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use AppBundle\Form\CommentType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 
 class BlogController extends Controller
 {
     /**
-     * @Route("/", name="homepage")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(Request $request)
     {
@@ -34,28 +31,19 @@ class BlogController extends Controller
         $item = $this->getDoctrine()
             ->getRepository(BlogPost::class)
             ->find($slug);
-        // create a task and give it some dummy data for this example
-        $comment = new Comments();
 
         $commentItems = $this->getDoctrine()
             ->getRepository(Comments::class)
             ->findByBlogId($item->getId());
 
-        $form = $this->createFormBuilder($comment)
-            ->add('massage', TextareaType::class)
-            ->add('save', SubmitType::class)
-            ->getForm();
+        $comment = new Comments();
+        $form = $this->createForm(CommentType::class, $comment);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $comment = $form->getData();
-            $comment->setAuthor($this->getUser());
-            $comment->setCreated(new \DateTime());
-            $comment->setBlogId($item);
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($comment);
-            $em->flush();
+            $this->get('manager_comment')->addComment($item, $this->getUser(), $comment);
         }
 
         return $this->render('default/show.html.twig', [

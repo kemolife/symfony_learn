@@ -17,3 +17,16 @@ services:
       tags:
           - { name: sonata.admin, manager_type: orm, label: Blog posts }
       public: true
+
+   admin.comments:
+         class: AppBundle\Admin\CommentsAdmin
+         arguments: [~, AppBundle\Entity\Comments, ~]
+         tags:
+             - { name: sonata.admin, manager_type: orm, label: Comments }
+         public: true
+
+   manager_comment:
+      class: AppBundle\Manager\CommentsManager
+      arguments:
+          $em: "@doctrine.orm.entity_manager"
+      public: true
