@@ -31,5 +31,5 @@
     </div>
     {{ form_end(form) }}
 {% else %}
-    <p>Please <a href="/login">login</a>  and leaf comment</p>
+    <p>Please <a href="{{ path('fos_user_security_login') }}">login</a>  and leaf comment</p>
 {% endif %}

@@ -24,9 +24,16 @@ class MenuBuilder
 
     public function createMainMenu(array $options)
     {
-        $menu = $this->factory->createItem('root');
-
+        $menu = $this->factory->createItem('root',
+            array(
+                'childrenAttributes'    => array(
+                    'class'             => 'nav navbar-nav',
+                ),
+            )
+        );
         $menu->addChild('Home', array('route' => 'blog'));
+        $menu->addChild('Login', array('route' => 'fos_user_security_login'));
+        $menu->addChild('Logout', array('route' => 'fos_user_security_logout'));
 
         return $menu;
     }
