@@ -21,11 +21,15 @@
         {% endfor %}
     </ul>
 </div>
-{{ form_start(form) }}
-<div class="form_row">
-    {{ form_label(form.massage) }}
-    {{ form_errors(form.massage) }}
-    {{ form_widget(form.massage, { 'attr': {'class': 'form-control', 'rows': '5', 'id': 'comment'} }) }}
-    {{ form_widget(form.save, { 'attr': {'class': 'form-control'}}) }}
-</div>
-{{ form_end(form) }}
+{% if app.user %}
+    {{ form_start(form) }}
+    <div class="form_row">
+        {{ form_label(form.massage) }}
+        {{ form_errors(form.massage) }}
+        {{ form_widget(form.massage, { 'attr': {'class': 'form-control', 'rows': '5', 'id': 'comment'} }) }}
+        {{ form_widget(form.save, { 'attr': {'class': 'form-control'}}) }}
+    </div>
+    {{ form_end(form) }}
+{% else %}
+    <p>Please <a href="/login">login</a>  and leaf comment</p>
+{% endif %}

@@ -30,3 +30,9 @@ services:
       arguments:
           $em: "@doctrine.orm.entity_manager"
       public: true
+
+   app.menu_builder:
+           class: AppBundle\Manager\MenuBuilder
+           arguments: ["@knp_menu.factory"]
+           tags:
+               - { name: knp_menu.menu_builder, method: createMainMenu, alias: main }

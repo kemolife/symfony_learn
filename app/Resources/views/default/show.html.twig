@@ -1,13 +1,16 @@
 
 {% extends 'base.html.twig' %}
 
-{% block body %}
+{% block title_main %}
+    {{ item.title }}
+{% endblock %}
+{% block img_main %}
+    {% path item.image, 'reference' %}
+{% endblock %}
 
+{% block body %}
     {% block main %}
-        {% block title_main %}
-            {{ item.title }}
-        {% endblock %}
-        {{ parent(blogs) }}
+        {{ parent() }}
     {% endblock %}
 
     <article>

@@ -1,32 +1,55 @@
+parameters:
+    sonata_media.cdn.host: /uploads/media
+
 sonata_media:
+    class:
+        media:  Application\Sonata\MediaBundle\Entity\Media
     # ...
     db_driver: doctrine_orm
     default_context: default
     contexts:
-            default:  # the default context is mandatory
-                providers:
-                    - sonata.media.provider.dailymotion
-                    - sonata.media.provider.youtube
-                    - sonata.media.provider.image
-                    - sonata.media.provider.file
+        default:  # the default context is mandatory
+            providers:
+                - sonata.media.provider.dailymotion
+                - sonata.media.provider.youtube
+                - sonata.media.provider.image
+                - sonata.media.provider.file
+        news:
+            providers:
+                - sonata.media.provider.image
+
+            formats:
+                abstract: { width: 100, quality: 100}
+                wide:     { width: 820, quality: 100}
     filesystem:
             local:
                 directory:  %kernel.root_dir%/../web/uploads/media
-                create:     false
+                create:     true
     pixlr:
         enabled:  true
         secret:   theSecretHash
         referrer: Application Name
     providers:
-        # ...
-        image:
-            thumbnail:  sonata.media.thumbnail.liip_imagine
-        vimeo:
-            thumbnail:  sonata.media.thumbnail.liip_imagine
-        youtube:
-            thumbnail:  sonata.media.thumbnail.liip_imagine
-        dailymotion:
-            thumbnail:  sonata.media.thumbnail.liip_imagine
+            # ...
+            file:
+                # the resizer must be set to false, otherwhise this can delete icon files from the fs
+                resizer:    false
+            image:
+               thumbnail: sonata.media.thumbnail.format          # default value
+    #           thumbnail: sonata.media.thumbnail.consumer.format # can be used to dispatch the resize action to async task
+    #            thumbnail: sonata.media.thumbnail.liip_imagine    # use the LiipImagineBundle to resize the image
+            vimeo:
+                thumbnail: sonata.media.thumbnail.format          # default value
+    #           thumbnail: sonata.media.thumbnail.consumer.format # can be used to dispatch the resize action to async task
+    #           thumbnail: sonata.media.thumbnail.liip_imagine    # use the LiipImagineBundle to resize the image
+            youtube:
+                thumbnail: sonata.media.thumbnail.format          # default value
+    #           thumbnail: sonata.media.thumbnail.consumer.format # can be used to dispatch the resize action to async task
+    #           thumbnail: sonata.media.thumbnail.liip_imagine    # use the LiipImagineBundle to resize the image
+            dailymotion:
+                thumbnail: sonata.media.thumbnail.format          # default value
+    #           thumbnail: sonata.media.thumbnail.consumer.format # can be used to dispatch the resize action to async task
+    #           thumbnail: sonata.media.thumbnail.liip_imagine    # use the LiipImagineBundle to resize the image
     cdn:
         server:
-            path: /uploads/media # http://media.sonata-project.org/
+            path: %sonata_media.cdn.host%

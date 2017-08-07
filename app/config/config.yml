@@ -4,7 +4,9 @@ imports:
     - { resource: services.yml }
     - { resource: l-imagine.yml }
     - { resource: sonata.yml }
+    - { resource: sonata_media.yml }
     - { resource: easy_admin.yml }
+    - { resource: menu.yml }
     - { resource: ck.yml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
@@ -58,11 +60,17 @@ doctrine:
         #   2. Uncomment database_path in parameters.yml.dist
         #   3. Uncomment next line:
         #path:     "%database_path%"
+        types:
+            json: Sonata\Doctrine\Types\JsonType
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
-        naming_strategy: doctrine.orm.naming_strategy.underscore
-        auto_mapping: true
+        entity_managers:
+            default:
+                auto_mapping: true
+                mappings:
+                    SonataMediaBundle: ~
+                    ApplicationSonataMediaBundle: ~
 
 # Swiftmailer Configuration
 swiftmailer:

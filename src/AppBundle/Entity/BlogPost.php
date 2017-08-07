@@ -59,6 +59,12 @@ class BlogPost
     private $updated;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media", cascade={"all"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $image;
+
+    /**
      * Get id
      *
      * @return int
@@ -185,6 +191,25 @@ class BlogPost
         return $this->updated;
     }
 
+    /**
+     * @param \Application\Sonata\MediaBundle\Entity\Media $image
+     * @return BlogPost
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
 
 }
 
