@@ -2,6 +2,7 @@ app:
     resource: "@AppBundle/Controller/"
     type:     annotation
 
+
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
     prefix: /security
@@ -27,6 +28,12 @@ blog:
     path: /
     defaults: {_controller: AppBundle:Blog:index}
 
+blog_exmple_php7:
+    path: /exmplephp7
+    defaults: {_controller: AppBundle:Blog:example}
+
 blog_show:
     path: /{slug}
     defaults: {_controller: AppBundle:Blog:show}
+
+

@@ -3,10 +3,12 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\BlogPost;
+use AppBundle\Entity\Category;
 use AppBundle\Entity\Comments;
 use AppBundle\Form\CommentType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class BlogController extends Controller
 {
@@ -51,5 +53,13 @@ class BlogController extends Controller
             'item' => $item,
             'commentItems' => $commentItems
         ]);
+    }
+
+    public function exampleAction()
+    {
+        $id = 1;
+        $str = 1;
+        $id = $this->get('example_php7')->test($id, $str);
+        return new Response($id);
     }
 }
